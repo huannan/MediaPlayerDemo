@@ -1,1 +1,1 @@
-# MediaplayerDemo
+# MediaPlayerDemo
