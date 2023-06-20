@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
+    private static final String TAG = "huannan";
     private MediaPlayer mediaPlayer;
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
             @Override
             public void onClick(View view) {
                 try {
+                    Log.d(TAG, "onClick: play");
                     mediaPlayer.reset();
                     AssetFileDescriptor fileDescriptor = getAssets().openFd("sample.mp4");
                     mediaPlayer.setDataSource(fileDescriptor.getFileDescriptor(), fileDescriptor.getStartOffset(), fileDescriptor.getLength());
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
                     mediaPlayer.prepare();
                     mediaPlayer.start();
                 } catch (IOException e) {
+                    Log.e(TAG, "onError e=" + e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -59,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         btnPause.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onClick: pause");
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.pause();
                 } else {
@@ -70,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.d(TAG, "onClick: stop");
                 if (mediaPlayer.isPlaying()) {
                     mediaPlayer.stop();
                 }
@@ -97,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        surfaceView.setBackgroundColor(Color.TRANSPARENT);
     }
 
     @Override
@@ -107,6 +112,5 @@ public class MainActivity extends AppCompatActivity implements SurfaceHolder.Cal
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-        surfaceView.setBackgroundColor(Color.BLACK);
     }
 }
